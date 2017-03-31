@@ -190,6 +190,7 @@ def logloss(p, y):
 def data(path, D):
     ''' GENERATOR: Apply hash-trick to the original csv row
                    and for simplicity, we one-hot-encode everything
+                   生成器
 
         INPUT:
             path: path to training or testing file
@@ -214,6 +215,7 @@ def data(path, D):
                 y = 1.
             del row['clicked']
 
+        #abs(hash(display_id_1))  去字符串hash值存入x     ？？？
         x = []
         for key in row:
             x.append(abs(hash(key + '_' + row[key])) % D)
@@ -311,14 +313,15 @@ del doc
 """
 
 # start training
+#开始训练
 for e in range(epoch):
     loss = 0.
     count = 0
     date = 0
-
+    #train: 训练文件地址   D:参数数量
     for t, disp_id, ad_id, x, y in data(train, D):  # data is a generator
-        #    t: just a instance counter
-        # date: you know what this is
+        #    t: just a instance counter 计数器
+        #   date: you know what this is
         #   ID: id provided in original data
         #    x: features
         #    y: label (click)
